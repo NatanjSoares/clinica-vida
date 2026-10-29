@@ -218,3 +218,18 @@ def test_cada_app_tem_sua_propria_fila_e_seu_proprio_banco(tmp_path):
 
     assert "Ninguém na fila." in texto(c2.get("/fila"))
     assert "Nenhum paciente cadastrado." in texto(c2.get("/pacientes"))
+
+
+# ---------- CSS ----------
+
+def test_pagina_inclui_o_link_do_css(client):
+    pagina = texto(client.get("/pacientes"))
+
+    assert "css/estilo.css" in pagina
+
+
+def test_arquivo_css_e_servido(client):
+    resposta = client.get("/static/css/estilo.css")
+
+    assert resposta.status_code == 200
+    assert "text/css" in resposta.content_type
