@@ -1,27 +1,30 @@
 {% extends "base.html" %}
 
-{% block titulo %}Buscar paciente{% endblock %}
+{% block titulo %}Buscar paciente · Clínica Vida+{% endblock %}
 
 {% block conteudo %}
-<h2>Buscar paciente</h2>
+<section class="cartao">
+    <h2>Buscar paciente</h2>
 
-<form method="get" action="{{ url_for('buscar_paciente') }}">
-    <label>Nome (ou parte do nome):
-        <input type="text" name="nome" value="{{ nome }}">
-    </label>
-    <button type="submit">Buscar</button>
-</form>
+    <form class="formulario formulario-linha" method="get" action="{{ url_for('buscar_paciente') }}">
+        <div class="campo">
+            <label for="nome">Nome (ou parte do nome)</label>
+            <input type="text" id="nome" name="nome" value="{{ nome }}" placeholder="Ex.: silva">
+        </div>
+        <button type="submit" class="botao">Buscar</button>
+    </form>
 
-{% if achados is not none %}
-    {% if achados %}
-    <h3>Paciente(s) encontrado(s)</h3>
-    <ul>
-        {% for p in achados %}
-        <li>{{ p.nome }} | Idade: {{ p.idade }} | Telefone: {{ p.telefone }}</li>
-        {% endfor %}
-    </ul>
-    {% else %}
-    <p>Paciente não encontrado.</p>
+    {% if achados is not none %}
+        {% if achados %}
+        <h3>Paciente(s) encontrado(s)</h3>
+        <ul class="lista-resultados">
+            {% for p in achados %}
+            <li>{{ p.nome }} | Idade: {{ p.idade }} | Telefone: {{ p.telefone }}</li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p class="vazio">Paciente não encontrado.</p>
+        {% endif %}
     {% endif %}
-{% endif %}
+</section>
 {% endblock %}

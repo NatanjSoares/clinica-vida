@@ -1,24 +1,27 @@
 {% extends "base.html" %}
 
-{% block titulo %}Regras de atendimento{% endblock %}
+{% block titulo %}Regras de atendimento · Clínica Vida+{% endblock %}
 
 {% block conteudo %}
-<h2>Regras de atendimento</h2>
-<p>Marque as condições que o paciente cumpre:</p>
+<section class="cartao cartao-estreito">
+    <h2>Regras de atendimento</h2>
+    <p>Marque as condições que o paciente cumpre:</p>
 
-<form method="post" action="{{ url_for('verificar_regras') }}">
-    <p><label><input type="checkbox" name="a" {% if marcados.a %}checked{% endif %}> A: tem agendamento marcado</label></p>
-    <p><label><input type="checkbox" name="b" {% if marcados.b %}checked{% endif %}> B: documentos em dia (RG/CPF válidos)</label></p>
-    <p><label><input type="checkbox" name="c" {% if marcados.c %}checked{% endif %}> C: há médico disponível no horário</label></p>
-    <p><label><input type="checkbox" name="d" {% if marcados.d %}checked{% endif %}> D: pagamentos anteriores em dia</label></p>
-    <p><button type="submit">Verificar</button></p>
-</form>
+    <form class="formulario" method="post" action="{{ url_for('verificar_regras') }}">
+        <label class="opcao"><input type="checkbox" name="a" {% if marcados.a %}checked{% endif %}> A: tem agendamento marcado</label>
+        <label class="opcao"><input type="checkbox" name="b" {% if marcados.b %}checked{% endif %}> B: documentos em dia (RG/CPF válidos)</label>
+        <label class="opcao"><input type="checkbox" name="c" {% if marcados.c %}checked{% endif %}> C: há médico disponível no horário</label>
+        <label class="opcao"><input type="checkbox" name="d" {% if marcados.d %}checked{% endif %}> D: pagamentos anteriores em dia</label>
 
-{% if resultado %}
-<h3>Resultado</h3>
-<ul>
-    <li>Consulta Normal: {{ "ATENDIDO" if resultado.consulta_normal else "NÃO ATENDIDO" }}</li>
-    <li>Emergência: {{ "ATENDIDO" if resultado.emergencia else "NÃO ATENDIDO" }}</li>
-</ul>
-{% endif %}
+        <button type="submit" class="botao">Verificar</button>
+    </form>
+
+    {% if resultado %}
+    <h3>Resultado</h3>
+    <ul class="resultado">
+        <li class="{{ 'ok' if resultado.consulta_normal else 'nao' }}">Consulta Normal: {{ "ATENDIDO" if resultado.consulta_normal else "NÃO ATENDIDO" }}</li>
+        <li class="{{ 'ok' if resultado.emergencia else 'nao' }}">Emergência: {{ "ATENDIDO" if resultado.emergencia else "NÃO ATENDIDO" }}</li>
+    </ul>
+    {% endif %}
+</section>
 {% endblock %}

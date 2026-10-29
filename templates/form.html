@@ -1,30 +1,35 @@
 {% extends "base.html" %}
 
-{% block titulo %}Cadastrar paciente{% endblock %}
+{% block titulo %}Cadastrar paciente · Clínica Vida+{% endblock %}
 
 {% block conteudo %}
-<h2>Cadastrar paciente</h2>
+<section class="cartao cartao-estreito">
+    <h2>Cadastrar paciente</h2>
 
-{% if erro %}
-<p><strong>Erro: {{ erro }}</strong></p>
-{% endif %}
+    {% if erro %}
+    <p class="alerta erro" role="alert">Erro: {{ erro }}</p>
+    {% endif %}
 
-<form method="post" action="{{ url_for('novo_paciente') }}">
-    <p>
-        <label>Nome do paciente:
-            <input type="text" name="nome" value="{{ dados.get('nome', '') }}">
-        </label>
-    </p>
-    <p>
-        <label>Idade:
-            <input type="text" name="idade" value="{{ dados.get('idade', '') }}">
-        </label>
-    </p>
-    <p>
-        <label>Telefone:
-            <input type="text" name="telefone" value="{{ dados.get('telefone', '') }}">
-        </label>
-    </p>
-    <p><button type="submit">Cadastrar</button></p>
-</form>
+    <form class="formulario" id="form-paciente" method="post" action="{{ url_for('novo_paciente') }}">
+        <div class="campo">
+            <label for="nome">Nome do paciente</label>
+            <input type="text" id="nome" name="nome" value="{{ dados.get('nome', '') }}" placeholder="Ex.: João Silva" required>
+        </div>
+
+        <div class="campo">
+            <label for="idade">Idade</label>
+            <input type="text" id="idade" name="idade" value="{{ dados.get('idade', '') }}" inputmode="numeric" placeholder="Ex.: 45" required>
+        </div>
+
+        <div class="campo">
+            <label for="telefone">Telefone</label>
+            <input type="tel" id="telefone" name="telefone" value="{{ dados.get('telefone', '') }}" placeholder="(11) 99999-9999" required>
+        </div>
+
+        <div class="acoes">
+            <button type="submit" class="botao">Cadastrar</button>
+            <a class="botao botao-claro" href="{{ url_for('listar_pacientes') }}">Cancelar</a>
+        </div>
+    </form>
+</section>
 {% endblock %}
