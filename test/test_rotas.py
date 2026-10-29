@@ -233,3 +233,24 @@ def test_arquivo_css_e_servido(client):
 
     assert resposta.status_code == 200
     assert "text/css" in resposta.content_type
+
+
+# ---------- JavaScript ----------
+
+def test_pagina_inclui_o_link_do_js(client):
+    pagina = texto(client.get("/pacientes"))
+
+    assert "js/app.js" in pagina
+
+
+def test_arquivo_js_e_servido(client):
+    resposta = client.get("/static/js/app.js")
+
+    assert resposta.status_code == 200
+    assert "javascript" in resposta.content_type
+
+
+def test_lista_com_pacientes_tem_campo_de_filtro(client):
+    cadastrar(client)
+
+    assert 'id="filtro-tabela"' in texto(client.get("/pacientes"))

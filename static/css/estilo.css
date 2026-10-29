@@ -420,3 +420,20 @@ a {
         width: 100%;
     }
 }
+
+/* ---------- validação no navegador (JavaScript) e filtro ---------- */
+
+.campo input.campo-invalido {
+    border-color: var(--erro);
+    background: var(--erro-fundo);
+}
+
+.mensagem-campo {
+    color: var(--erro);
+    font-size: 0.875rem;
+}
+
+.filtro {
+    max-width: 360px;
+    margin-bottom: 1rem;
+}

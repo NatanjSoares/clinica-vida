@@ -10,6 +10,11 @@
     </div>
 
     {% if lista %}
+    <div class="campo filtro">
+        <label for="filtro-tabela">Filtrar pacientes</label>
+        <input type="text" id="filtro-tabela" placeholder="Digite nome, idade ou telefone">
+    </div>
+
     <div class="tabela-rolagem">
         <table class="tabela" id="tabela-pacientes">
             <thead>
@@ -32,6 +37,7 @@
             </tbody>
         </table>
     </div>
+    <p class="vazio" id="filtro-vazio" hidden>Nenhum paciente combina com o filtro.</p>
     {% else %}
     <p class="vazio">Nenhum paciente cadastrado.</p>
     {% endif %}
