@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8">
+    <title>{% block titulo %}Clínica Vida+{% endblock %}</title>
+</head>
+<body>
+    <h1>Clínica Vida+</h1>
+    <nav>
+        <a href="{{ url_for('listar_pacientes') }}">Pacientes</a> |
+        <a href="{{ url_for('novo_paciente') }}">Cadastrar</a> |
+        <a href="{{ url_for('buscar_paciente') }}">Buscar</a> |
+        <a href="{{ url_for('ver_estatisticas') }}">Estatísticas</a> |
+        <a href="{{ url_for('ver_fila') }}">Fila</a> |
+        <a href="{{ url_for('verificar_regras') }}">Regras de atendimento</a>
+    </nav>
+    <hr>
+
+    {% block conteudo %}{% endblock %}
+</body>
+</html>

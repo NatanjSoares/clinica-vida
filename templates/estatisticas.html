@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block titulo %}Estatísticas{% endblock %}
+
+{% block conteudo %}
+<h2>Estatísticas</h2>
+
+{% if stats is none %}
+<p>Nenhum paciente cadastrado.</p>
+{% else %}
+<ul>
+    <li>Total de pacientes: {{ stats.total }}</li>
+    <li>Idade média: {{ "%.2f"|format(stats.media_idade) }}</li>
+    <li>Paciente(s) mais novo(s):
+        <ul>
+            {% for p in stats.mais_novos %}
+            <li>{{ p.nome }} ({{ p.idade }} anos)</li>
+            {% endfor %}
+        </ul>
+    </li>
+    <li>Paciente(s) mais velho(s):
+        <ul>
+            {% for p in stats.mais_velhos %}
+            <li>{{ p.nome }} ({{ p.idade }} anos)</li>
+            {% endfor %}
+        </ul>
+    </li>
+</ul>
+{% endif %}
+{% endblock %}

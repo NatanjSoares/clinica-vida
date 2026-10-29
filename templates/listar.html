@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block titulo %}Pacientes{% endblock %}
+
+{% block conteudo %}
+<h2>Lista de pacientes</h2>
+
+{% if lista %}
+<table border="1" cellpadding="4">
+    <tr>
+        <th>#</th>
+        <th>Nome</th>
+        <th>Idade</th>
+        <th>Telefone</th>
+    </tr>
+    {% for p in lista %}
+    <tr>
+        <td>{{ loop.index }}</td>
+        <td>{{ p.nome }}</td>
+        <td>{{ p.idade }}</td>
+        <td>{{ p.telefone }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% else %}
+<p>Nenhum paciente cadastrado.</p>
+{% endif %}
+
+<p><a href="{{ url_for('novo_paciente') }}">Cadastrar novo paciente</a></p>
+{% endblock %}

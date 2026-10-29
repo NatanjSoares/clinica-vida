@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block titulo %}Buscar paciente{% endblock %}
+
+{% block conteudo %}
+<h2>Buscar paciente</h2>
+
+<form method="get" action="{{ url_for('buscar_paciente') }}">
+    <label>Nome (ou parte do nome):
+        <input type="text" name="nome" value="{{ nome }}">
+    </label>
+    <button type="submit">Buscar</button>
+</form>
+
+{% if achados is not none %}
+    {% if achados %}
+    <h3>Paciente(s) encontrado(s)</h3>
+    <ul>
+        {% for p in achados %}
+        <li>{{ p.nome }} | Idade: {{ p.idade }} | Telefone: {{ p.telefone }}</li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p>Paciente não encontrado.</p>
+    {% endif %}
+{% endif %}
+{% endblock %}
