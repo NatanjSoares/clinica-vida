@@ -3,7 +3,7 @@
 As rotas só recebem o pedido do navegador e chamam os módulos que já existem
 e já estão testados: validacoes, models, pacientes, estatisticas, regras e fila.
 """
-
+import os
 from flask import Flask, g, redirect, render_template, request, url_for
 
 import db
@@ -18,9 +18,34 @@ from validacoes import validar_idade, validar_telefone
 def create_app(config=None):
     """Cria e configura o app. Cada chamada gera um app novo (banco e fila próprios)."""
     app = Flask(__name__)
-    app.config["DATABASE"] = "clinica.db"
+
+    ambiente = os.environ.get("APP_ENV", "development").lower()
+
+    chave_secreta = (
+        os.environ.get("SECRET_KEY")
+        or (config or {}).get("SECRET_KEY")
+    )
+
+    if ambiente == "production" and not chave_secreta:
+        raise RuntimeError(
+            "Configure a variável de ambiente SECRET_KEY em produção."
+        )
+
+    app.config.from_mapping(
+        SECRET_KEY=chave_secreta or "chave-local-desenvolvimento",
+        DATABASE=os.environ.get(
+            "DATABASE_PATH",
+            os.path.join(app.instance_path, "clinica.db")
+        ),
+        TESTING=False,
+        DEBUG=ambiente != "production",
+    )
+
     if config:
         app.config.update(config)
+
+    if ambiente == "production":
+        app.config["DEBUG"] = False
 
     # A fila fica em memória e pertence a este app.
     fila_atendimento = FilaAtendimento()
@@ -148,4 +173,5 @@ def create_app(config=None):
 
 
 if __name__ == "__main__":
-    create_app().run(debug=True)
+    app = create_app()
+    app.run(debug=app.config["DEBUG"])
