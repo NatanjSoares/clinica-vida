@@ -17,6 +17,30 @@ Aplicação web desenvolvida em Python e Flask como projeto de portfólio de An�
 - Avaliação de regras lógicas para consulta normal e emergência.
 - Persistência dos pacientes em banco SQLite.
 
+## Capturas de tela
+
+Capturas da versão publicada, feitas com dados fictícios.
+
+**Lista de pacientes**
+
+<img src="docs/img/01-lista-pacientes.png" alt="Lista de pacientes com filtro" width="720">
+
+**Cadastro com validação de dados**
+
+<img src="docs/img/02-cadastro-validacao.png" alt="Formulário de cadastro exibindo mensagem de erro de validação" width="720">
+
+**Estatísticas**
+
+<img src="docs/img/03-estatisticas.png" alt="Estatísticas: total, idade média, mais novo e mais velho" width="720">
+
+**Fila de atendimento**
+
+<img src="docs/img/04-fila.png" alt="Fila de atendimento com paciente em atendimento" width="720">
+
+**Regras de atendimento (tabela verdade)**
+
+<img src="docs/img/05-regras.png" alt="Regras de atendimento: consulta normal e emergência" width="720">
+
 ## Rotas principais
 
 | Rota | Método | Finalidade |
@@ -64,7 +88,10 @@ clinica-vida/
 │   └── js/
 └── docs/
     ├── der-clinica-vida.md
-    └── relatorio-atividades-deploy.md
+    ├── der_clinica_vida.png
+    ├── der_clinica_vida.svg
+    ├── relatorio-atividades-deploy.md
+    └── img/               # capturas de tela usadas neste README
 ```
 
 ## Executar localmente
@@ -82,7 +109,7 @@ Windows PowerShell:
 
 ```powershell
 python -m venv venv
-.env\Scripts\Activate.ps1
+.\venv\Scripts\Activate.ps1
 ```
 
 Linux/macOS:
