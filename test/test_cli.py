@@ -60,6 +60,23 @@ def test_fim_da_entrada_encerra_sem_erro(conn, monkeypatch, capsys):
     assert "Encerrando o sistema" in saida
 
 
+def test_ctrl_c_no_meio_do_cadastro_encerra_sem_erro(conn, monkeypatch, capsys):
+    respostas = iter(["1"])
+
+    def entrada(_prompt=""):
+        try:
+            return next(respostas)
+        except StopIteration:
+            raise KeyboardInterrupt  # como se o usuário apertasse Ctrl+C
+
+    monkeypatch.setattr("builtins.input", entrada)
+
+    saida = rodar(conn, capsys)
+
+    assert "Encerrando o sistema" in saida
+    assert pacientes.listar(conn) == []
+
+
 # ---------- 1. cadastrar ----------
 
 def test_cadastrar_paciente_valido(conn, monkeypatch, capsys):

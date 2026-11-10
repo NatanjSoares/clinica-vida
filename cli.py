@@ -96,19 +96,20 @@ def menu(conn):
 
         try:
             opcao = input("Escolha uma opção: ").strip()
+
+            if opcao == "5":
+                print("\nEncerrando o sistema. Até logo!\n")
+                break
+
+            acao = ACOES.get(opcao)
+            if acao is None:
+                print("\nOpção inválida. Tente novamente.\n")
+            else:
+                acao(conn)
         except (EOFError, KeyboardInterrupt):
+            # Ctrl+C ou fim da entrada, em qualquer ponto (inclusive no meio de um cadastro)
             print("\n\nEncerrando o sistema. Até logo!\n")
             break
-
-        if opcao == "5":
-            print("\nEncerrando o sistema. Até logo!\n")
-            break
-
-        acao = ACOES.get(opcao)
-        if acao is None:
-            print("\nOpção inválida. Tente novamente.\n")
-        else:
-            acao(conn)
 
 
 def main(caminho="clinica.db"):
