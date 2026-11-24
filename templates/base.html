@@ -10,8 +10,9 @@
 <body>
     <header class="topo">
         <div class="container">
-            <a class="marca" href="{{ url_for('listar_pacientes') }}">Clínica <span>Vida+</span></a>
+            <a class="marca" href="{{ url_for('inicio') }}">Clínica <span>Vida+</span></a>
             <nav class="menu">
+                <a href="{{ url_for('inicio') }}" class="{{ 'ativo' if request.endpoint == 'inicio' }}">Início</a>
                 <a href="{{ url_for('listar_pacientes') }}" class="{{ 'ativo' if request.endpoint == 'listar_pacientes' }}">Pacientes</a>
                 <a href="{{ url_for('novo_paciente') }}" class="{{ 'ativo' if request.endpoint == 'novo_paciente' }}">Cadastrar</a>
                 <a href="{{ url_for('buscar_paciente') }}" class="{{ 'ativo' if request.endpoint == 'buscar_paciente' }}">Buscar</a>

@@ -164,17 +164,61 @@
         });
     }
 
+    /* ---------- página inicial ---------- */
+
+    // "Bom dia", "Boa tarde" ou "Boa noite", conforme a hora (0 a 23)
+    function saudacaoPorHora(hora) {
+        if (hora >= 5 && hora < 12) { return "Bom dia"; }
+        if (hora >= 12 && hora < 18) { return "Boa tarde"; }
+        return "Boa noite";
+    }
+
+    // anima o número de 0 até o valor final (some se o usuário prefere menos movimento)
+    function animarNumero(elemento, reduzMovimento) {
+        var alvo = parseFloat(elemento.getAttribute("data-valor"));
+        var casas = parseInt(elemento.getAttribute("data-casas") || "0", 10);
+        if (isNaN(alvo) || alvo === 0 || reduzMovimento) { return; }
+
+        var duracao = 800;
+        var inicio = null;
+
+        function passo(agora) {
+            if (inicio === null) { inicio = agora; }
+            var progresso = Math.min((agora - inicio) / duracao, 1);
+            elemento.textContent = (alvo * progresso).toFixed(casas).replace(".", ",");
+            if (progresso < 1) { window.requestAnimationFrame(passo); }
+        }
+        window.requestAnimationFrame(passo);
+    }
+
+    function configurarPaginaInicial() {
+        var saudacao = document.getElementById("saudacao");
+        if (saudacao) {
+            saudacao.textContent = saudacaoPorHora(new Date().getHours()) +
+                "! Bem-vindo(a) ao sistema da Clínica Vida+.";
+        }
+
+        var reduzMovimento = window.matchMedia &&
+            window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+        document.querySelectorAll(".numero[data-valor]").forEach(function (elemento) {
+            animarNumero(elemento, reduzMovimento);
+        });
+    }
+
     /* ---------- início ---------- */
 
     if (typeof document !== "undefined") {  // só roda no navegador
         configurarFormularioPaciente();
         configurarFiltroTabela();
+        configurarPaginaInicial();
         aplicarMascara(document.getElementById("cpf"), formatarCpf);
     }
 
     // permite testar as funções de texto fora do navegador (Node)
     if (typeof module !== "undefined" && module.exports) {
         module.exports = { somenteDigitos: somenteDigitos, formatarTelefone: formatarTelefone,
-                           formatarCpf: formatarCpf, normalizar: normalizar };
+                           formatarCpf: formatarCpf, normalizar: normalizar,
+                           saudacaoPorHora: saudacaoPorHora };
     }
 })();

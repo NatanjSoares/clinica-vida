@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+
+{% block titulo %}Início · Clínica Vida+{% endblock %}
+
+{% block conteudo %}
+<section class="heroi">
+    <p class="saudacao" id="saudacao">Bem-vindo(a) ao sistema da Clínica Vida+.</p>
+    <h2>Gestão de pacientes, fila de atendimento e regras de acesso em um só lugar</h2>
+    <p class="heroi-texto">Cadastre e consulte pacientes, acompanhe as estatísticas, organize a fila de atendimento e verifique quem pode ser atendido em consulta normal ou emergência.</p>
+    <div class="acoes">
+        <a class="botao" href="{{ url_for('novo_paciente') }}">Cadastrar paciente</a>
+        <a class="botao botao-claro" href="{{ url_for('listar_pacientes') }}">Ver pacientes</a>
+    </div>
+</section>
+
+<section class="resumo" aria-label="Resumo do sistema">
+    <div class="resumo-item">
+        <span class="numero" id="num-pacientes" data-valor="{{ total }}">{{ total }}</span>
+        <span class="rotulo">Pacientes cadastrados</span>
+    </div>
+    <div class="resumo-item">
+        <span class="numero" id="num-fila" data-valor="{{ na_fila }}">{{ na_fila }}</span>
+        <span class="rotulo">Pessoas na fila</span>
+    </div>
+    <div class="resumo-item">
+        {% if media is not none %}
+        <span class="numero" id="num-media" data-valor="{{ '%.1f'|format(media) }}" data-casas="1">{{ ('%.1f'|format(media))|replace('.', ',') }}</span>
+        {% else %}
+        <span class="numero" id="num-media">—</span>
+        {% endif %}
+        <span class="rotulo">Idade média dos pacientes</span>
+    </div>
+</section>
+
+<h3 class="titulo-secao">Módulos do sistema</h3>
+<div class="modulos">
+    <a class="modulo" href="{{ url_for('listar_pacientes') }}">
+        <strong>Pacientes</strong>
+        <span class="descricao">Lista organizada, com filtro por nome, idade ou telefone.</span>
+        <span class="abrir">Abrir →</span>
+    </a>
+    <a class="modulo" href="{{ url_for('novo_paciente') }}">
+        <strong>Cadastrar</strong>
+        <span class="descricao">Novo paciente com validação de idade e telefone.</span>
+        <span class="abrir">Abrir →</span>
+    </a>
+    <a class="modulo" href="{{ url_for('buscar_paciente') }}">
+        <strong>Buscar</strong>
+        <span class="descricao">Encontre um paciente pelo nome ou por parte dele.</span>
+        <span class="abrir">Abrir →</span>
+    </a>
+    <a class="modulo" href="{{ url_for('ver_estatisticas') }}">
+        <strong>Estatísticas</strong>
+        <span class="descricao">Total, idade média, paciente mais novo e mais velho.</span>
+        <span class="abrir">Abrir →</span>
+    </a>
+    <a class="modulo" href="{{ url_for('ver_fila') }}">
+        <strong>Fila de atendimento</strong>
+        <span class="descricao">O primeiro a chegar é o primeiro a ser atendido (FIFO).</span>
+        <span class="abrir">Abrir →</span>
+    </a>
+    <a class="modulo" href="{{ url_for('verificar_regras') }}">
+        <strong>Regras de atendimento</strong>
+        <span class="descricao">Consulta normal e emergência, pela tabela verdade.</span>
+        <span class="abrir">Abrir →</span>
+    </a>
+</div>
+
+<p class="alerta info aviso-demo" role="note">
+    <strong>Demonstração acadêmica.</strong>
+    Este sistema não possui login. Use apenas dados fictícios e não cadastre dados reais de pacientes.
+</p>
+
+<section class="cartao">
+    <h3 class="titulo-secao">Sobre o projeto</h3>
+    <p>Projeto Integrado de Análise e Desenvolvimento de Sistemas, com testes automatizados e publicação em hospedagem gratuita.</p>
+    <ul class="tecnologias">
+        <li>Python</li>
+        <li>Flask</li>
+        <li>SQLite</li>
+        <li>HTML · CSS · JavaScript</li>
+        <li>pytest</li>
+    </ul>
+    <p><a href="https://github.com/NatanJSoares/clinica-vida">Código-fonte no GitHub</a></p>
+</section>
+{% endblock %}

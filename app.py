@@ -72,9 +72,14 @@ def create_app(config=None):
 
     @app.route("/")
     def inicio():
-        return redirect(url_for("listar_pacientes"))
-
-    # ---------- pacientes ----------
+        lista = pacientes.listar(get_conn())
+        stats = estatisticas.calcular_estatisticas(lista)
+        return render_template(
+            "inicio.html",
+            total=len(lista),
+            media=stats["media_idade"] if stats else None,
+            na_fila=fila_atendimento.tamanho(),
+        )
 
     @app.route("/pacientes")
     def listar_pacientes():

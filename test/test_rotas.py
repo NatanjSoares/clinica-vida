@@ -27,11 +27,44 @@ def cadastrar(client, nome="João Silva", idade="45", telefone="(11) 99999-9999"
 
 # ---------- início e pacientes ----------
 
-def test_raiz_redireciona_para_pacientes(client):
+def test_pagina_inicial_abre(client):
     resposta = client.get("/")
 
-    assert resposta.status_code == 302
-    assert resposta.headers["Location"].endswith("/pacientes")
+    assert resposta.status_code == 200
+    assert 'id="saudacao"' in texto(resposta)
+
+
+def test_pagina_inicial_comeca_zerada(client):
+    pagina = texto(client.get("/"))
+
+    assert 'id="num-pacientes" data-valor="0"' in pagina
+    assert 'id="num-fila" data-valor="0"' in pagina
+
+
+def test_pagina_inicial_conta_pacientes_fila_e_media(client):
+    cadastrar(client, nome="Maria", idade="20")
+    cadastrar(client, nome="Pedro", idade="30")
+    client.post("/fila/entrar", data={"nome": "João", "cpf": "111"})
+
+    pagina = texto(client.get("/"))
+
+    assert 'id="num-pacientes" data-valor="2"' in pagina
+    assert 'id="num-fila" data-valor="1"' in pagina
+    assert 'id="num-media" data-valor="25.0"' in pagina
+
+
+def test_pagina_inicial_tem_link_para_todos_os_modulos(client):
+    pagina = texto(client.get("/"))
+
+    for rota in ["/pacientes", "/pacientes/novo", "/pacientes/buscar",
+                 "/estatisticas", "/fila", "/regras"]:
+        assert f'href="{rota}"' in pagina
+
+
+def test_pagina_inicial_avisa_que_so_deve_usar_dados_ficticios(client):
+    pagina = texto(client.get("/"))
+
+    assert "dados fictícios" in pagina
 
 
 def test_listar_sem_pacientes(client):
